@@ -21,6 +21,7 @@ module.exports = function (app) {
     // ---------------------------------------------------------------------------
     app.get("/api/friends", function (req, res) {
         res.json(friendsData);
+        
     });
 
     // API POST Requests
@@ -32,6 +33,16 @@ module.exports = function (app) {
     // ---------------------------------------------------------------------------
 
     app.post("/api/friends", function (req, res) {    
-        //write function here.
+        var newFriendsData = req.body;
+        friendsData.push(newFriendsData);
+        res.json(newFriendsData);
+
+        for (var i = 0; i < numberScores.length; i++) {
+        var numberScores = parseInt(req.body.scores);
+
+        console.log(numberScores);
+        }
+        //this where i left off. use node.bank.js to split and parse up the numbers.
+        
     });
 }

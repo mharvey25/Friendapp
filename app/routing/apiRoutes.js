@@ -21,7 +21,7 @@ module.exports = function (app) {
     // ---------------------------------------------------------------------------
     app.get("/api/friends", function (req, res) {
         res.json(friendsData);
-        
+
     });
 
     // API POST Requests
@@ -32,17 +32,52 @@ module.exports = function (app) {
     // Then the server saves the data to the tableData array)
     // ---------------------------------------------------------------------------
 
-    app.post("/api/friends", function (req, res) {    
-        var newFriendsData = req.body;
-        friendsData.push(newFriendsData);
-        res.json(newFriendsData);
+    app.post("/api/friends", function (req, res) {
 
-        for (var i = 0; i < numberScores.length; i++) {
-        var numberScores = parseInt(req.body.scores);
+        var friendName = "";
+        var friendPhoto = "";
+        var difference = 40;
 
-        console.log(numberScores);
-        }
-        //this where i left off. use node.bank.js to split and parse up the numbers.
-        
+        // For-each loop to go through the data in friends.js to find a match
+        friendsData.forEach(function (friend) {
+            // Variables for comparing matches
+            var matchedScoresArray = [];
+            var totalDifference = 40;
+
+            // Function to assist in the addition reduce() below
+            function add(total, num) {
+                return total + num;
+            }
+
+            // This loops through each item of the scores arrays
+            // from both the stored data and the new user, 
+            // and then substracts, absolutes, and then pushes the 
+            // new value to the matchedScoresArray
+            for (var i = 0; i < friend.scores.length; i++) {
+                matchedScoresArray.push(Math.abs(parseInt(req.body.scores[i]) - parseInt(friend.scores[i])));
+            }
+            // This reduces the matchScoresArray into a single value in a variable
+            totalDifference = matchedScoresArray.reduce(add, 0);
+            console.log("difference " + totalDifference);
+            // If the above value is smaller than the previous difference...
+            if (totalDifference < difference) {
+                // Set it as the previous difference...
+                difference = totalDifference;
+                // And set these variables to the appropriate friend match
+                friendName = friend.name;
+                console.log(friendName);
+                friendPhoto = friend.photo;
+                console.log(friendPhoto);
+            }
+        });
+        // Once the cycle is complete, the match with the least difference will remain,
+        // and that data will be sent as a json object back to the client
+        res.json({
+            name: friendName,
+            photo: friendPhoto
+        });
+        // console.log("res " + res.json);
+        // This adds the new users sent data object to friends.js
+        friendsData.push(req.body);
     });
 }

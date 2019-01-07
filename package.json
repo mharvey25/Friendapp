@@ -1,0 +1,26 @@
+{
+  "name": "friendapp",
+  "version": "1.0.0",
+  "description": "friendapp",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mharvey25/Friendapp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mharvey25/Friendapp/issues"
+  },
+  "homepage": "https://github.com/mharvey25/Friendapp#readme"
+}
